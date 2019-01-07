@@ -32,6 +32,7 @@ namespace Friendster
             });
 
             services.AddScoped<IDataRepository, DataRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
