@@ -28,7 +28,6 @@ namespace Friendster.Controllers
             return Ok(values);
         }
 
-
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
