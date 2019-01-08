@@ -21,6 +21,7 @@ namespace Friendster.Controllers
             _repo = repo;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
