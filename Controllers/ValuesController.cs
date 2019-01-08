@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Friendster.Data;
 using Friendster.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Friendster.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -26,6 +28,8 @@ namespace Friendster.Controllers
             return Ok(values);
         }
 
+
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
         {
