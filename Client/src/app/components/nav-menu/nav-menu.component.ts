@@ -10,10 +10,9 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 export class NavMenuComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService, private alertify: AlertifyService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   login() {
     this.authService.login(this.model).subscribe(next => {
@@ -28,8 +27,7 @@ export class NavMenuComponent implements OnInit {
     this.alertify.message('Logged out');
   }
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 }
