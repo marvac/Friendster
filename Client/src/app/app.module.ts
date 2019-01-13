@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -14,7 +15,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { RouterModule } from '@angular/router';
+import { appRoutes } from './routes';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    RouterModule
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     AuthService,

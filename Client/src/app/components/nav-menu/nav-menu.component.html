@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="#">Friendster</a>
+    <a class="navbar-brand" [routerLink]="['/home']">Friendster</a>
 
     <ul class="navbar-nav mr-auto" *ngIf="isAuthenticated()">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Friends</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/members']">Friends</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Lists</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/lists']">Lists</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Messages</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
     </ul>
 
