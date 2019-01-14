@@ -6,8 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Data\Seeds\UserSeeds.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Client\src\app\guards\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Seeds\UserSeeds.json" />
   </ItemGroup>
 
   <ItemGroup>

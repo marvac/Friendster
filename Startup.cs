@@ -32,6 +32,7 @@ namespace Friendster
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddTransient<Seeder>();
             services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,7 +52,7 @@ namespace Friendster
             services.AddCors();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -73,6 +74,8 @@ namespace Friendster
                     });
                 });
             }
+
+            seeder.SeedUsers();
 
             app.UseCors(config =>
             {
