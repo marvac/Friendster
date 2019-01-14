@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Friendster.Helpers;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace Friendster
 {
@@ -33,8 +34,11 @@ namespace Friendster
             });
 
             services.AddTransient<Seeder>();
+
             services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IFriendRepository, FriendRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -47,7 +51,11 @@ namespace Friendster
                     };
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
             services.AddCors();
         }

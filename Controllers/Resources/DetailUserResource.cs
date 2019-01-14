@@ -1,0 +1,26 @@
+﻿using Friendster.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Friendster.Controllers.Resources
+{
+    public class DetailUserResource
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public Gender Gender { get; set; }
+        public int Age { get; set; }
+        public string KnownAs { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime LastActive { get; set; }
+        public string Introduction { get; set; }
+        public Gender LookingFor { get; set; }
+        public string Interests { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string PhotoUrl { get; set; }
+        public ICollection<Photo> Photos { get; set; }
+    }
+}
