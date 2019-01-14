@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="Client\src\app\guards\" />
+    <Folder Include="Client\src\app\models\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
