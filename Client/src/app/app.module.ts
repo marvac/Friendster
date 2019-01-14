@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -19,7 +20,11 @@ import { appRoutes } from './routes';
 import { AuthGuard } from './guards/auth.guard';
 import { UserService } from './services/user.service';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
+import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -30,12 +35,20 @@ import { MemberCardComponent } from './components/members/member-card/member-car
     MemberListComponent,
     ListsComponent,
     MessagesComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberDetailComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:54314'],
+        blacklistedRoutes: ['localhost:54314/api/auth']
+      }
+    }),
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
