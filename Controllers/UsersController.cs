@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Friendster.Controllers.Resources;
 using Friendster.Data;
 using Friendster.Models;
@@ -19,24 +21,28 @@ namespace Friendster.Controllers
     public class UsersController : ControllerBase
     {
         private IFriendRepository _repo;
+        private IMapper _mapper;
 
-        public UsersController(IFriendRepository repo)
+        public UsersController(IFriendRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _repo.GetUsers();
-            return Ok(users);
+            var usersResource = _mapper.Map<IEnumerable<User>, IEnumerable<ListUserResource>>(users);
+            return Ok(usersResource);
         }
 
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUser(int userId)
         {
             var user = await _repo.GetUser(userId);
-            return Ok(user);
+            var userResource = _mapper.Map<User, DetailUserResource>(user);
+            return Ok(userResource);
         }
     }
 }

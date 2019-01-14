@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Friendster.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace Friendster
 {
@@ -57,6 +58,7 @@ namespace Friendster
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
+            services.AddAutoMapper();
             services.AddCors();
         }
 
