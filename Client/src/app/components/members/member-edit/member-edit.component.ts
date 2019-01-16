@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { AlertifyService } from 'src/app/services/alertify.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-member-edit',
@@ -8,9 +10,17 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
+  @ViewChild('editForm') editForm: NgForm;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.editForm.dirty) {
+      $event.returnValue = true;
+    }
+  }
+
   user: User;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -18,4 +28,8 @@ export class MemberEditComponent implements OnInit {
     });
   }
 
+  updateUser() {
+    this.alertify.success("Changes were saved");
+    this.editForm.reset(this.user);
+  }
 }
