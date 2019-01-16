@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -44,6 +45,7 @@ export function tokenGetter() {
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    NgxGalleryModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
