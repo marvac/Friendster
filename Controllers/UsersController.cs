@@ -44,5 +44,26 @@ namespace Friendster.Controllers
             var userResource = _mapper.Map<User, DetailUserResource>(user);
             return Ok(userResource);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserResource userResource)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _repo.GetUser(userId);
+            _mapper.Map(userResource, user);
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return NoContent();
+            }
+
+            throw new Exception($"Updating user ID {userId} failed to save");
+        }
     }
 }

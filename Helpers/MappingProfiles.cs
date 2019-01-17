@@ -13,6 +13,8 @@ namespace Friendster.Helpers
     {
         public MappingProfiles()
         {
+            #region Model to Resource
+
             CreateMap<User, DetailUserResource>()
                 .ForMember(x => x.PhotoUrl, options =>
                 {
@@ -30,6 +32,14 @@ namespace Friendster.Helpers
                 });
 
             CreateMap<Photo, DetailPhotoResource>();
+
+            #endregion
+
+            #region Resource to Model
+
+            CreateMap<UpdateUserResource, User>();
+
+            #endregion
         }
     }
 }
