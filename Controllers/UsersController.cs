@@ -45,12 +45,12 @@ namespace Friendster.Controllers
             return Ok(userResource);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UpdateUserResource userResource)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUser(int userId, UpdateUserResource userResource)
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (id != userId)
+            if (userId != id)
             {
                 return Unauthorized();
             }

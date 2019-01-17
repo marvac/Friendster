@@ -35,6 +35,11 @@ namespace Friendster.Data
             return user;
         }
 
+        public async Task<Photo> GetPhoto(int photoId)
+        {
+            return await _context.Photos.FirstOrDefaultAsync(x => x.Id == photoId);
+        }
+
         public async Task<IEnumerable<User>> GetUsers()
         {
             var users = await _context.Users

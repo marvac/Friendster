@@ -13,5 +13,6 @@ namespace Friendster.Data
         Task<bool> SaveChangesAsync();
         Task<IEnumerable<User>> GetUsers();
         Task<User> GetUser(int userId);
+        Task<Photo> GetPhoto(int photoId);
     }
 }

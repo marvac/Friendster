@@ -33,11 +33,16 @@ namespace Friendster.Helpers
 
             CreateMap<Photo, DetailPhotoResource>();
 
+            CreateMap<Photo, PhotoResource>();
+
             #endregion
 
             #region Resource to Model
 
             CreateMap<UpdateUserResource, User>();
+
+            CreateMap<AddPhotoResource, Photo>();
+            
 
             #endregion
         }

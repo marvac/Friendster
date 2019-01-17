@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Friendster.Models
+namespace Friendster.Controllers.Resources
 {
-    public class Photo
+    public class PhotoResource
     {
         public int Id { get; set; }
         public string Url { get; set; }
@@ -13,8 +13,5 @@ namespace Friendster.Models
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
-
-        public User User { get; set; }
-        public int UserId { get; set; }
     }
 }
