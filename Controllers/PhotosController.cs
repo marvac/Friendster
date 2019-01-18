@@ -49,7 +49,7 @@ namespace Friendster.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddPhoto(int userId, AddPhotoResource addPhotoResource)
+        public async Task<ActionResult> AddPhoto(int userId, [FromForm]AddPhotoResource addPhotoResource)
         {
             int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -61,6 +61,11 @@ namespace Friendster.Controllers
             var user = await _repo.GetUser(userId);
 
             var file = addPhotoResource.File;
+            if (file == null)
+            {
+                return BadRequest("Photo must be included");
+            }
+
             var uploadResult = new ImageUploadResult();
             if (file.Length > 0)
             {
@@ -92,7 +97,7 @@ namespace Friendster.Controllers
             {
                 var photoResource = _mapper.Map<Photo, PhotoResource>(photo);
 
-                return CreatedAtRoute(nameof(GetPhoto), new { id = photoResource.Id }, photoResource);
+                return CreatedAtRoute(nameof(GetPhoto), new { photoId = photo.Id }, photoResource);
             }
 
             return BadRequest("Could not add photo to user");

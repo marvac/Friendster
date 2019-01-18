@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Friendster.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190117064547_CloudPublicIdToPhoto")]
-    partial class CloudPublicIdToPhoto
+    [Migration("20190117073214_AddPublicIdToPhoto")]
+    partial class AddPublicIdToPhoto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,8 @@ namespace Friendster.Migrations
                     b.Property<string>("Description");
 
                     b.Property<bool>("IsMain");
+
+                    b.Property<string>("PublicId");
 
                     b.Property<string>("Url");
 
