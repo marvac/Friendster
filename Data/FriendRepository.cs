@@ -40,6 +40,12 @@ namespace Friendster.Data
             return await _context.Photos.FirstOrDefaultAsync(x => x.Id == photoId);
         }
 
+        public async Task<Photo> GetMainPhoto(int userId)
+        {
+           return await _context.Photos.Where(x => x.Id == userId)
+                .FirstOrDefaultAsync(x => x.IsMain);
+        }
+
         public async Task<IEnumerable<User>> GetUsers()
         {
             var users = await _context.Users
@@ -53,5 +59,7 @@ namespace Friendster.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        
     }
 }

@@ -102,5 +102,45 @@ namespace Friendster.Controllers
 
             return BadRequest("Could not add photo to user");
         }
+
+        [HttpPost("{photoId}/setMain")]
+        public async Task<ActionResult> SetMainPhoto(int userId, int photoId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _repo.GetUser(userId);
+
+            if (!user.Photos.Any(x => x.Id == photoId))
+            {
+                return Unauthorized();
+            }
+
+            var photo = await _repo.GetPhoto(photoId);
+
+            if (photo.IsMain)
+            {
+                return BadRequest("Photo is already set as main");
+            }
+
+            var mainPhoto = await _repo.GetMainPhoto(userId);
+            if (mainPhoto == null)
+            {
+                mainPhoto.IsMain = false;
+            }
+
+            photo.IsMain = true;
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return NoContent();
+            }
+
+            return BadRequest("Something went wrong");
+        }
     }
 }
