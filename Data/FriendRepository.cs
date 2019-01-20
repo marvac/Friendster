@@ -42,7 +42,7 @@ namespace Friendster.Data
 
         public async Task<Photo> GetMainPhoto(int userId)
         {
-           return await _context.Photos.Where(x => x.Id == userId)
+           return await _context.Photos.Where(x => x.UserId == userId)
                 .FirstOrDefaultAsync(x => x.IsMain);
         }
 

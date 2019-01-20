@@ -128,7 +128,7 @@ namespace Friendster.Controllers
             }
 
             var mainPhoto = await _repo.GetMainPhoto(userId);
-            if (mainPhoto == null)
+            if (mainPhoto != null)
             {
                 mainPhoto.IsMain = false;
             }
