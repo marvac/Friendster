@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using Friendster.Controllers.Resources;
 using Friendster.Models;
-using Friendster.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Friendster.Helpers
 {

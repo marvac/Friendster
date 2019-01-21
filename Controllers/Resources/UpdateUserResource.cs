@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Friendster.Controllers.Resources
+﻿namespace Friendster.Controllers.Resources
 {
     public class UpdateUserResource
     {
