@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Friendster.Controllers.Resources;
 using Friendster.Data;
 using Friendster.Models;
@@ -18,11 +19,13 @@ namespace Friendster.Controllers
     {
         private IAuthRepository _repo;
         private IConfiguration _config;
+        private IMapper _mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -49,9 +52,9 @@ namespace Friendster.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserResource userResource)
+        public async Task<IActionResult> Login(LoginUserResource loginUserResource)
         {
-            var user = await _repo.Login(userResource.Username, userResource.Password);
+            var user = await _repo.Login(loginUserResource.Username, loginUserResource.Password);
             if (user == null)
             {
                 return Unauthorized();
@@ -78,9 +81,12 @@ namespace Friendster.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var userResource = _mapper.Map<User, ListUserResource>(user);
+
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                userResource
             });
         }
     }
