@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from '../models/user';
 
@@ -16,6 +16,8 @@ export class AuthService {
 
   public currentUser: User;
   public decodedToken: any;
+  public photoUrl = new BehaviorSubject<string>('../../assets/placeholder.png');
+  public currentPhotoUrl = this.photoUrl.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +31,7 @@ export class AuthService {
             localStorage.setItem('user', JSON.stringify(user.userResource));
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
             this.currentUser = user.userResource;
+            this.changeProfilePhoto(this.currentUser.photoUrl);
           }
         })
       );
@@ -41,5 +44,9 @@ export class AuthService {
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  changeProfilePhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
   }
 }
