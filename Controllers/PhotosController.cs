@@ -141,5 +141,45 @@ namespace Friendster.Controllers
 
             return BadRequest("Something went wrong");
         }
+
+        [HttpDelete("{photoId}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int photoId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _repo.GetUser(userId);
+
+            if (!user.Photos.Any(x => x.Id == photoId))
+            {
+                return Unauthorized();
+            }
+
+            var photo = await _repo.GetPhoto(photoId);
+
+            if (photo.IsMain)
+            {
+                return BadRequest("Cannot delete main photo");
+            }
+
+            if (!string.IsNullOrWhiteSpace(photo.PublicId))
+            {
+                DeletionParams deletionParams = new DeletionParams(photo.PublicId);
+                var deleteResult = _cloudAccount.Destroy(deletionParams);
+            }
+
+            _repo.Delete(photo);
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Something went wrong");
+        }
     }
 }
