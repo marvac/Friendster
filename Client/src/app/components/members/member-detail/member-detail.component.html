@@ -31,25 +31,25 @@
     </div>
     <div class="col-sm-8">
       <div class="tab-panel">
-        <tabset class="member-tabset">
-          <tab heading="About {{user.knownAs}}">
-            <h4>Description</h4>
-            <p>{{user.introduction}}</p>
-            <h4>Interested In</h4>
-            <p>{{user.lookingFor}}</p>
-          </tab>
-          <tab heading="Interests">
-            <h4>Interests</h4>
-            <p>{{user.interests}}</p>
-          </tab>
-          <tab heading="Photos">
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-          </tab>
-          <tab heading="Messages">
+      <tabset class="member-tabset">
+        <tab heading="About {{user.knownAs}}">
+          <h4>Description</h4>
+          <p>{{user.introduction}}</p>
+          <h4>Interested In</h4>
+          <p>{{user.lookingFor}}</p>
+        </tab>
+        <tab heading="Interests">
+          <h4>Interests</h4>
+          <p>{{user.interests}}</p>
+        </tab>
+        <tab heading="Photos">
+          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+        </tab>
+        <tab heading="Messages">
 
-          </tab>
-        </tabset>
-      </div>
+        </tab>
+      </tabset>
+    </div>
     </div>
   </div>
 </div>
