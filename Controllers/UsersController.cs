@@ -33,7 +33,7 @@ namespace Friendster.Controllers
             return Ok(usersResource);
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int userId)
         {
             var user = await _repo.GetUser(userId);

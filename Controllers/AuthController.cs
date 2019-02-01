@@ -1,15 +1,15 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Friendster.Controllers.Resources;
 using Friendster.Data;
 using Friendster.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Friendster.Controllers
 {
@@ -41,14 +41,12 @@ namespace Friendster.Controllers
                 return BadRequest("Username already exists");
             }
 
-            User user = new User
-            {
-                Username = userResource.Username
-            };
+            var user = _mapper.Map<RegisterUserResource, User>(userResource);
+            var returnUser = _mapper.Map<User, DetailUserResource>(user);
 
             var registeredUser = await _repo.Register(user, userResource.Password);
 
-            return StatusCode(201);
+            return CreatedAtRoute(nameof(UsersController.GetUser), new { controller = "Users", id = user.Id }, returnUser);
         }
 
         [HttpPost("login")]
