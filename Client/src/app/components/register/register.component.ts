@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,14 +14,26 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   registerForm: FormGroup;
 
-  constructor(private authService: AuthService, private alertify: AlertifyService) { }
+  constructor(
+    private authService: AuthService,
+    private alertify: AlertifyService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]),
-      confirmPassword: new FormControl('', Validators.required)
-    }, this.passwordConfirmationValidator);
+    this.createRegisterForm();
+  }
+
+  createRegisterForm() {
+    this.registerForm = this.formBuilder.group({
+      gender: ['male'],
+      username: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: [null, Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.passwordConfirmationValidator });
   }
 
   register() {
