@@ -37,8 +37,8 @@ export class AuthService {
       );
   }
 
-  register(model: any) {
-    return this.http.post(this.registerUrl, model);
+  register(user: User) {
+    return this.http.post(this.registerUrl, user);
   }
 
   isAuthenticated(): boolean {
