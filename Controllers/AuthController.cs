@@ -42,11 +42,10 @@ namespace Friendster.Controllers
             }
 
             var user = _mapper.Map<RegisterUserResource, User>(userResource);
-            var returnUser = _mapper.Map<User, DetailUserResource>(user);
-
             var registeredUser = await _repo.Register(user, userResource.Password);
+            var returnUser = _mapper.Map<User, DetailUserResource>(registeredUser);
 
-            return CreatedAtRoute(nameof(UsersController.GetUser), new { controller = "Users", id = user.Id }, returnUser);
+            return CreatedAtRoute(nameof(UsersController.GetUser), new { controller = nameof(UsersController), userId = registeredUser.Id }, returnUser);
         }
 
         [HttpPost("login")]
