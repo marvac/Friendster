@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Friendster.Controllers.Resources;
@@ -11,6 +8,9 @@ using Friendster.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Friendster.Controllers
 {

@@ -40,7 +40,7 @@ namespace Friendster.Helpers
             CreateMap<AddPhotoResource, Photo>();
 
             CreateMap<RegisterUserResource, User>();
-            
+
 
             #endregion
         }

@@ -24,7 +24,7 @@ export class NavMenuComponent implements OnInit {
       this.router.navigate(['/members']);
     }, error => {
       this.alertify.error(error);
-      });
+    });
   }
 
   logout() {

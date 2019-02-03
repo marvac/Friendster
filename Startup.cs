@@ -1,6 +1,6 @@
-﻿using System.Net;
-using System.Text;
+﻿using AutoMapper;
 using Friendster.Data;
+using Friendster.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Friendster.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using AutoMapper;
+using System.Net;
+using System.Text;
 
 namespace Friendster
 {

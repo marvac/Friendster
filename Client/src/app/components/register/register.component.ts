@@ -54,11 +54,11 @@ export class RegisterComponent implements OnInit {
         this.alertify.success("You have successfully registered");
       }, error => {
         this.alertify.error(error);
-        }, () => {
-          this.authService.login(this.user).subscribe(() => {
-            this.router.navigate(['/members']);
-          });
+      }, () => {
+        this.authService.login(this.user).subscribe(() => {
+          this.router.navigate(['/members']);
         });
+      });
     }
   }
 
@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
       return null;
     }
 
-    return {'mismatch': true};
+    return { 'mismatch': true };
   }
 
   cancel() {
