@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Friendster.Controllers.Resources;
 using Friendster.Data;
+using Friendster.Helpers;
 using Friendster.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Friendster.Controllers
 {
+    [ServiceFilter(typeof(LogActivity))]
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
