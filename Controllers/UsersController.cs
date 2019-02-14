@@ -30,6 +30,15 @@ namespace Friendster.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParameters parameters)
         {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var currentUser = await _repo.GetUser(currentUserId);
+            parameters.UserId = currentUserId;
+
+            if (string.IsNullOrWhiteSpace(parameters.Gender))
+            {
+                parameters.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+
             var users = await _repo.GetUsers(parameters);
             var usersResource = _mapper.Map<IEnumerable<User>, IEnumerable<ListUserResource>>(users);
 

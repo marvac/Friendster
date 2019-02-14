@@ -21,5 +21,10 @@ namespace Friendster.Helpers
                 _pageSize = value > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : value;
             }
         }
+
+        public int UserId { get; set; }
+        public string Gender { get; set; }
+        public int MinimumAge { get; set; } = 18;
+        public int MaximumAge { get; set; } = 99;
     }
 }

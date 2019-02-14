@@ -1,7 +1,7 @@
 ﻿using Friendster.Helpers;
 using Friendster.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,8 +48,15 @@ namespace Friendster.Data
 
         public async Task<PagedList<User>> GetUsers(UserParameters parameters)
         {
+            var minimumBirthDate = DateTime.Now.AddYears(-parameters.MaximumAge -1);
+            var maximumBirthDate = DateTime.Now.AddYears(-parameters.MinimumAge);
+
             var users = _context.Users
-                .Include(p => p.Photos);
+                .Include(p => p.Photos)
+                .Where(u => u.Id != parameters.UserId &&
+                    u.Gender == parameters.Gender &&
+                    u.BirthDate >= minimumBirthDate &&
+                    u.BirthDate <= maximumBirthDate);
 
             return await PagedList<User>.CreateAsync(users, parameters.PageNumber, parameters.PageSize);
         }

@@ -1,7 +1,7 @@
 ﻿[
   {
     "Username": "Bridgette",
-    "Gender": "Female",
+    "Gender": "female",
     "BirthDate": "1986-08-06",
     "Password": "password",
     "KnownAs": "Bridgette",
@@ -22,7 +22,7 @@
   },
   {
     "Username": "Karen",
-    "Gender": "Female",
+    "Gender": "female",
     "BirthDate": "1979-06-04",
     "Password": "password",
     "KnownAs": "Karen",
@@ -43,7 +43,7 @@
   },
   {
     "Username": "Patricia",
-    "Gender": "Female",
+    "Gender": "female",
     "BirthDate": "1989-05-07",
     "Password": "password",
     "KnownAs": "Patricia",
@@ -64,7 +64,7 @@
   },
   {
     "Username": "Jill",
-    "Gender": "Female",
+    "Gender": "female",
     "BirthDate": "1989-01-25",
     "Password": "password",
     "KnownAs": "Jill",
@@ -85,7 +85,7 @@
   },
   {
     "Username": "Rosemarie",
-    "Gender": "Female",
+    "Gender": "female",
     "BirthDate": "1971-06-26",
     "Password": "password",
     "KnownAs": "Rosemarie",
@@ -106,7 +106,7 @@
   },
   {
     "Username": "Chris",
-    "Gender": "Male",
+    "Gender": "male",
     "BirthDate": "1982-06-06",
     "Password": "password",
     "KnownAs": "Chris",
@@ -127,7 +127,7 @@
   },
   {
     "Username": "Adam",
-    "Gender": "Male",
+    "Gender": "male",
     "BirthDate": "1976-09-15",
     "Password": "password",
     "KnownAs": "Adam",
@@ -148,7 +148,7 @@
   },
   {
     "Username": "Dennis",
-    "Gender": "Male",
+    "Gender": "male",
     "BirthDate": "1996-08-08",
     "Password": "password",
     "KnownAs": "Dennis",
@@ -169,7 +169,7 @@
   },
   {
     "Username": "Tyrone",
-    "Gender": "Male",
+    "Gender": "male",
     "BirthDate": "1951-05-26",
     "Password": "password",
     "KnownAs": "Tyrone",
@@ -190,7 +190,7 @@
   },
   {
     "Username": "Lee",
-    "Gender": "Male",
+    "Gender": "male",
     "BirthDate": "1968-01-14",
     "Password": "password",
     "KnownAs": "Lee",
