@@ -28,10 +28,13 @@ namespace Friendster.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParameters parameters)
         {
-            var users = await _repo.GetUsers();
+            var users = await _repo.GetUsers(parameters);
             var usersResource = _mapper.Map<IEnumerable<User>, IEnumerable<ListUserResource>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalItems, users.TotalPages);
+
             return Ok(usersResource);
         }
 

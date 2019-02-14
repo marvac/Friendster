@@ -1,4 +1,5 @@
-﻿using Friendster.Models;
+﻿using Friendster.Helpers;
+using Friendster.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,13 +46,12 @@ namespace Friendster.Data
                  .FirstOrDefaultAsync(x => x.IsMain);
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(UserParameters parameters)
         {
-            var users = await _context.Users
-                .Include(p => p.Photos)
-                .ToListAsync();
+            var users = _context.Users
+                .Include(p => p.Photos);
 
-            return users;
+            return await PagedList<User>.CreateAsync(users, parameters.PageNumber, parameters.PageSize);
         }
 
         public async Task<bool> SaveChangesAsync()

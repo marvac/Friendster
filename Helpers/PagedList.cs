@@ -11,24 +11,24 @@ namespace Friendster.Helpers
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 
-        public int TotalCount { get; set; }
+        public int TotalItems { get; set; }
         public int PageSize { get; set; }
 
-        public PagedList(List<T> items, int count, int currentPage, int pageSize)
+        public PagedList(List<T> items, int totalItems, int currentPage, int pageSize)
         {
-            TotalCount = count;
+            TotalItems = totalItems;
             CurrentPage = currentPage;
             PageSize = pageSize;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             this.AddRange(items);
         }
 
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int currentPage, int pageSize)
         {
-            int count = await source.CountAsync();
+            int totalItems = await source.CountAsync();
             var items = await source.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new PagedList<T>(items, count, currentPage, pageSize);
+            return new PagedList<T>(items, totalItems, currentPage, pageSize);
         }
     }
 }
