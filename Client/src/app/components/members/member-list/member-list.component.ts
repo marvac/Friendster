@@ -35,6 +35,7 @@ export class MemberListComponent implements OnInit {
     this.userParameters.gender = this.user.gender === 'male' ? 'female' : 'male';
     this.userParameters.minAge = 18;
     this.userParameters.maxAge = 99;
+    this.userParameters.orderBy = 'lastactive';
     if (loadUsers) {
       this.loadUsers();
     }
