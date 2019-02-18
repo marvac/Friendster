@@ -26,5 +26,6 @@ namespace Friendster.Helpers
         public string Gender { get; set; }
         public int MinimumAge { get; set; } = 18;
         public int MaximumAge { get; set; } = 99;
+        public string OrderBy { get; set; }
     }
 }

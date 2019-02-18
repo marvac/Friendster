@@ -58,6 +58,20 @@ namespace Friendster.Data
                     u.BirthDate >= minimumBirthDate &&
                     u.BirthDate <= maximumBirthDate);
 
+            string orderBy = parameters.OrderBy?.ToLower();
+            if (!string.IsNullOrWhiteSpace(orderBy))
+            {
+                switch (orderBy)
+                {
+                    case "created":
+                        users = users.OrderByDescending(x => x.DateCreated);
+                        break;
+                    default:
+                        users = users.OrderByDescending(x => x.LastActive);
+                        break;
+                }
+            }
+            
             return await PagedList<User>.CreateAsync(users, parameters.PageNumber, parameters.PageSize);
         }
 
