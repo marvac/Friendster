@@ -20,5 +20,13 @@ namespace Friendster.Models
         public string City { get; set; }
         public string Country { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        /// <summary>
+        /// Users this user has liked
+        /// </summary>
+        public ICollection<Like> Likers { get; set; }
+        /// <summary>
+        /// Users that have liked this user
+        /// </summary>
+        public ICollection<Like> Likees { get; set; }
     }
 }
