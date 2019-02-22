@@ -73,8 +73,8 @@ export function tokenGetter() {
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    AuthService,
     ErrorInterceptorProvider,
+    AuthService,
     AlertifyService,
     AuthGuard,
     UnsavedChangesGuard,

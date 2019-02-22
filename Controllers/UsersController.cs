@@ -81,6 +81,11 @@ namespace Friendster.Controllers
         {
             int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
+            if (userId != id)
+            {
+                return Unauthorized();
+            }
+
             var like = await _repo.GetLike(userId, recipientId);
 
             if (like != null)
@@ -88,7 +93,7 @@ namespace Friendster.Controllers
                 return BadRequest("This person was already liked by you");
             }
 
-            if (_repo.GetUser(recipientId) == null)
+            if (await _repo.GetUser(recipientId) == null)
             {
                 return NotFound("The user you tried to like doesn't exist");
             }
@@ -103,7 +108,7 @@ namespace Friendster.Controllers
 
             if (await _repo.SaveChangesAsync())
             {
-                return Ok(like);
+                return Ok();
             }
 
             return BadRequest("Failed to like this person");
