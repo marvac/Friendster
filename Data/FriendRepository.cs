@@ -2,6 +2,7 @@
 using Friendster.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,6 +59,18 @@ namespace Friendster.Data
                     u.BirthDate >= minimumBirthDate &&
                     u.BirthDate <= maximumBirthDate);
 
+            if (parameters.Likers)
+            {
+                var likers = await GetUserLikes(parameters.UserId, true);
+                users = users.Where(u => likers.Contains(u.Id));
+            }
+
+            if (parameters.Likees)
+            {
+                var likees = await GetUserLikes(parameters.UserId, false);
+                users = users.Where(u => likees.Contains(u.Id));
+            }
+
             string orderBy = parameters.OrderBy?.ToLower();
             if (!string.IsNullOrWhiteSpace(orderBy))
             {
@@ -83,6 +96,26 @@ namespace Friendster.Data
         public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        private async Task<IEnumerable<int>> GetUserLikes(int userId, bool getLikers)
+        {
+            var user = await _context.Users
+                .Include(x => x.Likers)
+                .Include(x => x.Likees)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (getLikers)
+            {
+                return user.Likers
+                    .Where(u => u.LikeeId == userId)
+                    .Select(u => u.LikerId);
+                   
+            }
+
+            return user.Likees
+                .Where(u => u.LikerId == userId)
+                .Select(u => u.LikeeId);
         }
     }
 }

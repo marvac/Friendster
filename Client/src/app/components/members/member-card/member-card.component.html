@@ -6,7 +6,7 @@
                 <button class="btn btn-primary" [routerLink]="['/members/', user.id]"><i class="fa fa-user"></i> </button>
             </li>
             <li class="list-inline-item">
-                <button class="btn btn-danger"><i class="fa fa-heart"></i> </button>
+                <button class="btn btn-danger" (click)="likeUser(user.id)"><i class="fa fa-heart"></i> </button>
             </li>
             <li class="list-inline-item">
                 <button class="btn btn-warning"><i class="fa fa-envelope"></i> </button>
