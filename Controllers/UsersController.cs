@@ -75,5 +75,38 @@ namespace Friendster.Controllers
 
             throw new Exception($"Updating user ID {userId} failed to save");
         }
+
+        [HttpPost("{userId}/like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(int userId, int recipientId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var like = await _repo.GetLike(userId, recipientId);
+
+            if (like != null)
+            {
+                return BadRequest("This person was already liked by you");
+            }
+
+            if (_repo.GetUser(recipientId) == null)
+            {
+                return NotFound("The user you tried to like doesn't exist");
+            }
+
+            like = new Like
+            {
+                LikerId = userId,
+                LikeeId = recipientId
+            };
+
+            _repo.Add(like);
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return Ok(like);
+            }
+
+            return BadRequest("Failed to like this person");
+        }
     }
 }

@@ -75,11 +75,14 @@ namespace Friendster.Data
             return await PagedList<User>.CreateAsync(users, parameters.PageNumber, parameters.PageSize);
         }
 
+        public async Task<Like> GetLike(int userId, int recipientId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(x => x.LikerId == userId && x.LikeeId == recipientId);
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }
-
-
     }
 }
