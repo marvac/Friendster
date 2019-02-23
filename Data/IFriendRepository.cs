@@ -15,6 +15,8 @@ namespace Friendster.Data
         Task<Photo> GetPhoto(int photoId);
         Task<Photo> GetMainPhoto(int userId);
         Task<Like> GetLike(int userId, int recipientId);
-        
+        Task<Message> GetMessage(int messageId);
+        Task<PagedList<Message>> GetMessages();
+        Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId);
     }
 }

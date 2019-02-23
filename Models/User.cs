@@ -28,5 +28,9 @@ namespace Friendster.Models
         /// Users that have liked this user
         /// </summary>
         public ICollection<Like> Likees { get; set; }
+
+        public ICollection<Message> SentMessages { get; set; }
+        public ICollection<Message> ReceivedMessages { get; set; }
+
     }
 }

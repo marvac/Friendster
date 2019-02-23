@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Friendster.Controllers
 {
     [Authorize]
-    [Route("api/users/{userId}/photos")]
+    [Route("api/users/{userId}/[controller]")]
     [ApiController]
     public class PhotosController : ControllerBase
     {

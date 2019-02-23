@@ -110,12 +110,26 @@ namespace Friendster.Data
                 return user.Likers
                     .Where(u => u.LikeeId == userId)
                     .Select(u => u.LikerId);
-                   
             }
 
             return user.Likees
                 .Where(u => u.LikerId == userId)
                 .Select(u => u.LikeeId);
+        }
+
+        public async Task<Message> GetMessage(int messageId)
+        {
+            return await _context.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
+        }
+
+        public async Task<PagedList<Message>> GetMessages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
