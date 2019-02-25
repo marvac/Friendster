@@ -73,6 +73,23 @@ namespace Friendster.Controllers
             return Ok(messagesResource);
         }
 
+        [HttpGet("thread/{recipientId}")]
+        public async Task<IActionResult> GetMessageThread(int userId, int recipientId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var messages = await _repo.GetMessageThread(userId, recipientId);
+
+            var messagesResource = _mapper.Map<IEnumerable<Message>, IEnumerable<MessageResource>>(messages);
+
+            return Ok(messagesResource);
+        }
+
         [HttpPost]
         public async Task<ActionResult> SendMessage(int userId, SendMessageResource sendMessageResource)
         {
