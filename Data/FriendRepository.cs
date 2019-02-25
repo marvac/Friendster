@@ -122,9 +122,30 @@ namespace Friendster.Data
             return await _context.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
         }
 
-        public async Task<PagedList<Message>> GetMessages()
+        public async Task<PagedList<Message>> GetMessages(MessageParameters messageParameters)
         {
-            throw new NotImplementedException();
+            var messages = _context.Messages
+                .Include(u => u.Sender)
+                .ThenInclude(p => p.Photos)
+                .Include(u => u.Recipient)
+                .ThenInclude(p => p.Photos)
+                .AsQueryable();
+
+            switch (messageParameters.MessageContainer)
+            {
+                case "Inbox":
+                    messages = messages.Where(u => u.RecipientId == messageParameters.UserId);
+                    break;
+                case "Outbox":
+                    messages = messages.Where(u => u.SenderId == messageParameters.UserId);
+                    break;
+                default: //just return unread messages
+                    messages = messages.Where(u => u.RecipientId == messageParameters.UserId && !u.MarkedAsRead);
+                    break;
+            }
+
+            messages = messages.OrderByDescending(m => m.MessageSent);
+            return await PagedList<Message>.CreateAsync(messages, messageParameters.PageNumber, messageParameters.PageSize);
         }
 
         public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -49,6 +50,27 @@ namespace Friendster.Controllers
             var messageResource = _mapper.Map<Message, SendMessageResource>(message);
 
             return Ok(messageResource);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMessages(int userId, [FromQuery]MessageParameters messageParameters)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            messageParameters.UserId = userId;
+
+            var messages = await _repo.GetMessages(messageParameters);
+
+            var messagesResource = _mapper.Map<PagedList<Message>, IEnumerable<Message>>(messages);
+
+            Response.AddPagination(messages.CurrentPage, messages.PageSize, messages.TotalItems, messages.TotalPages);
+
+            return Ok(messagesResource);
         }
 
         [HttpPost]

@@ -31,7 +31,15 @@ namespace Friendster.Helpers
             CreateMap<AddPhotoResource, Photo>();
             CreateMap<RegisterUserResource, User>();
             CreateMap<SendMessageResource, Message>().ReverseMap();
-
+            CreateMap<Message, MessageResource>()
+                .ForMember(m => m.SenderPhotoUrl, options =>
+                {
+                    options.MapFrom(source => source.Sender.Photos.FirstOrDefault(p => p.IsMain).Url);
+                })
+                .ForMember(m => m.RecipientPhotoUrl, options =>
+                {
+                    options.MapFrom(source => source.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url);
+                });
         }
     }
 }
