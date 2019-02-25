@@ -9,8 +9,6 @@ namespace Friendster.Helpers
     {
         public MappingProfiles()
         {
-            #region Model to Resource
-
             CreateMap<User, DetailUserResource>()
                 .ForMember(x => x.PhotoUrl, options =>
                 {
@@ -28,21 +26,12 @@ namespace Friendster.Helpers
                 });
 
             CreateMap<Photo, DetailPhotoResource>();
-
             CreateMap<Photo, PhotoResource>();
-
-            #endregion
-
-            #region Resource to Model
-
             CreateMap<UpdateUserResource, User>();
-
             CreateMap<AddPhotoResource, Photo>();
-
             CreateMap<RegisterUserResource, User>();
+            CreateMap<SendMessageResource, Message>().ReverseMap();
 
-
-            #endregion
         }
     }
 }

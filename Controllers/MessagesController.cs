@@ -8,6 +8,7 @@ using Friendster.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -40,22 +41,42 @@ namespace Friendster.Controllers
             }
 
             var message = await _repo.GetMessage(messageId);
+            if (message == null)
+            {
+                return NotFound();
+            }
+
             var messageResource = _mapper.Map<Message, SendMessageResource>(message);
+
             return Ok(messageResource);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> SendMessage(int userId, int recipientId, [FromForm]SendMessageResource sendMessageResource)
-        //{
-        //    int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        [HttpPost]
+        public async Task<ActionResult> SendMessage(int userId, SendMessageResource sendMessageResource)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        //    if (id != userId)
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
 
+            sendMessageResource.SenderId = userId;
+            var recipient = await _repo.GetUser(sendMessageResource.RecipientId);
+            if (recipient == null)
+            {
+                return BadRequest();
+            }
 
-        //}
+            var message = _mapper.Map<SendMessageResource, Message>(sendMessageResource);
+            _repo.Add(message);
+            if (await _repo.SaveChangesAsync())
+            {
+                return CreatedAtRoute(nameof(GetMessage), new { messageId = message.Id }, message);
+            }
+
+            throw new Exception("Failed to save message");
+        }
 
         //[HttpDelete("{messageId}")]
         //public async Task<IActionResult> DeleteMessage(int userId, int messageId)
@@ -67,7 +88,7 @@ namespace Friendster.Controllers
         //        return Unauthorized();
         //    }
 
-            
+
         //}
     }
 }
