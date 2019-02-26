@@ -88,4 +88,8 @@ export class UserService {
         return paginatedResult;
       }));
   }
+
+  getMessageThread(userId: number, recipientId: number) {
+    return this.http.get<Message[]>(`${this.usersUrl}${userId}/messages/thread/${recipientId}`);
+  }
 }
