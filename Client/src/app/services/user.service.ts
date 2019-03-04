@@ -92,4 +92,12 @@ export class UserService {
   getMessageThread(userId: number, recipientId: number) {
     return this.http.get<Message[]>(`${this.usersUrl}${userId}/messages/thread/${recipientId}`);
   }
+
+  sendMessage(userId: number, message: Message) {
+    return this.http.post(`${this.usersUrl}${userId}/messages/`, message);
+  }
+
+  deleteMessage(userId: number, messageId: number) {
+    return this.http.post(`${this.usersUrl}${userId}/messages/${messageId}`, {});
+  }
 }

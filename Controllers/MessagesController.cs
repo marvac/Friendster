@@ -93,9 +93,11 @@ namespace Friendster.Controllers
         [HttpPost]
         public async Task<ActionResult> SendMessage(int userId, SendMessageResource sendMessageResource)
         {
+            var sender = await _repo.GetUser(userId);
+
             int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (id != userId)
+            if (id != sender.Id)
             {
                 return Unauthorized();
             }
@@ -109,25 +111,54 @@ namespace Friendster.Controllers
 
             var message = _mapper.Map<SendMessageResource, Message>(sendMessageResource);
             _repo.Add(message);
+
             if (await _repo.SaveChangesAsync())
             {
-                return CreatedAtRoute(nameof(GetMessage), new { messageId = message.Id }, message);
+                var messageResource = _mapper.Map<Message, MessageResource>(message);
+
+                return CreatedAtRoute(nameof(GetMessage), new { messageId = message.Id }, messageResource);
             }
 
             throw new Exception("Failed to save message");
         }
 
-        //[HttpDelete("{messageId}")]
-        //public async Task<IActionResult> DeleteMessage(int userId, int messageId)
-        //{
-        //    int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        [HttpPost("{messageId}")]
+        public async Task<IActionResult> DeleteMessage(int userId, int messageId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        //    if (id != userId)
-        //    {
-        //        return Unauthorized();
-        //    }
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
 
+            var message = await _repo.GetMessage(messageId);
+            if (message == null)
+            {
+                return NotFound();
+            }
 
-        //}
+            if (message.SenderId == userId)
+            {
+                message.SenderDeleted = true;
+            }
+            else if (message.RecipientId == userId)
+            {
+                message.RecipientDeleted = true;
+            }
+
+            if (message.SenderDeleted && message.RecipientDeleted)
+            {
+                //both sides have opted to delete the message, remove from database
+                _repo.Delete(message);
+            }
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return NoContent();
+            }
+
+            throw new Exception("Error deleting message");
+        }
     }
 }
