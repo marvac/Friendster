@@ -97,7 +97,14 @@ namespace Friendster
             });
 
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc(routes =>
+            {
+                routes.MapSpaFallbackRoute(
+                    name: "fallback",
+                    defaults: new { controller = "Fallback", action = "Index" });
+            });
 
             app.UseSpa(spa =>
             {
