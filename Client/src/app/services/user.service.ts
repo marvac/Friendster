@@ -100,4 +100,10 @@ export class UserService {
   deleteMessage(userId: number, messageId: number) {
     return this.http.post(`${this.usersUrl}${userId}/messages/${messageId}`, {});
   }
+
+  markAsRead(userId: number, messageId: number) {
+    //subscribe here since we don't need to do anything with the returned info
+    return this.http.post(`${this.usersUrl}${userId}/messages/${messageId}/read`, {})
+      .subscribe();
+  }
 }

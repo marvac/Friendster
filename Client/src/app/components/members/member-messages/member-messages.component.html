@@ -19,7 +19,7 @@
                 
               </small>
               <small *ngIf="message.senderId != recipientId">
-                <span *ngIf="!message.isRead" class="text-danger"> (unread)</span>
+                <span *ngIf="!message.markedAsRead" class="text-danger"> (unread)</span>
               </small>
             </div>
             <p>{{message.content}}</p>

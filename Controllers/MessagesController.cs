@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using Friendster.Controllers.Resources;
 using Friendster.Data;
 using Friendster.Helpers;
 using Friendster.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -159,6 +155,38 @@ namespace Friendster.Controllers
             }
 
             throw new Exception("Error deleting message");
+        }
+
+        [HttpPost("{messageId}/read")]
+        public async Task<IActionResult> MarkAsRead(int userId, int messageId)
+        {
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id != userId)
+            {
+                return Unauthorized();
+            }
+
+            var message = await _repo.GetMessage(messageId);
+            if (message == null)
+            {
+                return NotFound();
+            }
+
+            if (message.RecipientId != userId)
+            {
+                return Unauthorized();
+            }
+
+            message.MarkedAsRead = true;
+            message.ReadDate = DateTime.Now;
+
+            if (await _repo.SaveChangesAsync())
+            {
+                return NoContent();
+            }
+
+            throw new Exception("Error marking message as read");
         }
     }
 }
