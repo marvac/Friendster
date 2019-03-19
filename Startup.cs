@@ -37,7 +37,6 @@ namespace Friendster
             services.AddTransient<Seeder>();
 
             services.Configure<CloudSettings>(Configuration.GetSection("CloudSettings"));
-            services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IFriendRepository, FriendRepository>();
             services.AddScoped<LogActivity>();

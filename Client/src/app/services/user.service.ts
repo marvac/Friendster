@@ -5,13 +5,15 @@ import { User } from '../models/user';
 import { PaginatedResult } from '../models/pagination';
 import { map } from 'rxjs/operators';
 import { Message } from '../models/message';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private usersUrl = '/api/users/';
+  private baseApiUrl = environment.baseApiUrl;
+  private usersUrl = `${this.baseApiUrl}/users/`;
 
   constructor(private http: HttpClient) { }
 

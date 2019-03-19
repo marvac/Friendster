@@ -4,14 +4,16 @@ import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loginUrl = '/api/auth/login';
-  private registerUrl = '/api/auth/register';
+  private baseApiUrl = environment.baseApiUrl;
+  private loginUrl = `${this.baseApiUrl}/auth/login`;
+  private registerUrl = `${this.baseApiUrl}/auth/register`;
   private jwtHelper = new JwtHelperService();
 
   public currentUser: User;
