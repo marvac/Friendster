@@ -16,7 +16,7 @@
 
         <div class="dropdown" *ngIf="isAuthenticated()" dropdown>
             <span class="mr-2">
-                <img src="{{ photoUrl || '../../assets/placeholder.png'}}" />
+                <img src="{{ photoUrl }}" />
             </span>
             <a class="dropdown-toggle text-light" dropdownToggle>
                 Welcome {{ authService.decodedToken?.unique_name | titlecase }}
