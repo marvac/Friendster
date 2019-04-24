@@ -100,9 +100,12 @@ namespace Friendster
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
-                routes.MapSpaFallbackRoute(
+                if (env.IsProduction())
+                {
+                    routes.MapSpaFallbackRoute(
                     name: "fallback",
                     defaults: new { controller = "Fallback", action = "Index" });
+                }
             });
 
             app.UseSpa(spa =>
